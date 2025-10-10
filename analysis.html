@@ -165,6 +165,116 @@
             color: var(--text-light);
             margin-top: 0.5rem;
         }
+
+        /* Methodology Accordion Styles */
+        .methodology-accordion {
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            border-radius: 10px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.3rem;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 1.5rem;
+        }
+
+        .methodology-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .methodology-section h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .methodology-section p, .methodology-section ul {
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .methodology-section ul {
+            margin-left: 1.5rem;
+        }
+
+        /* Responsive Mobile Improvements */
+        @media (max-width: 768px) {
+            .analysis-section {
+                padding: 1.5rem 1rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .chart-container {
+                margin: 1.5rem 0;
+                padding: 0.5rem 0;
+            }
+
+            .chart-description {
+                padding: 0 0.5rem;
+                font-size: 0.95rem;
+            }
+
+            .key-insight {
+                padding: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .interpretive-conclusion {
+                padding: 1.5rem;
+            }
+
+            .methodology-accordion {
+                margin: 1.5rem 0;
+            }
+
+            .accordion-content.active {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -195,7 +305,82 @@
                 </ul>
             </nav>
         </div>
+        <!-- Quick Jump Navigation for Analysis Sections -->
+        <div class="jump-nav" id="jumpNav" style="display: none;">
+            <div class="nav-container" style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; padding: 0.8rem 1rem; background: rgba(255, 255, 255, 0.95); border-top: 1px solid #e0e0e0;">
+                <a href="#chart1" class="jump-link">📊 Size vs Power</a>
+                <a href="#chart2" class="jump-link">🖥️ Technology</a>
+                <a href="#chart3" class="jump-link">⭐ Star Ratings</a>
+                <a href="#chart4" class="jump-link">🏭 Brands</a>
+                <a href="#chart5" class="jump-link">🔍 Area Analysis</a>
+                <a href="#chart6" class="jump-link">📈 Trends</a>
+            </div>
+        </div>
     </header>
+    
+    <style>
+        .jump-link {
+            padding: 0.5rem 1rem;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .jump-link:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 102, 204, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .jump-nav {
+                padding: 0.5rem 0 !important;
+            }
+            
+            .jump-link {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
+    
+    <script>
+        // Show jump navigation only on analysis page
+        if (window.location.pathname.includes('analysis.html')) {
+            document.getElementById('jumpNav').style.display = 'block';
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('.jump-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+    <!-- Accessibility Note -->
+    <div class="accessibility-banner" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 1rem; text-align: center; border-bottom: 2px solid var(--electric-blue); display: none;" id="accessibilityBanner">
+        <p style="margin: 0; font-size: 0.9rem; color: var(--dark-blue);">
+            ♿ <strong>Accessibility:</strong> All charts include descriptive alt text. Charts use color-blind-safe palettes where possible. For assistance, please contact the author.
+        </p>
+    </div>
+    
+    <script>
+        // Show accessibility banner on analysis page
+        if (window.location.pathname.includes('analysis.html')) {
+            document.getElementById('accessibilityBanner').style.display = 'block';
+        }
+    </script>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -206,6 +391,11 @@
                 <p style="font-size: 1.2rem; color: var(--text-light); max-width: 800px; margin: 0 auto;">
                     Comprehensive data-driven insights into TV energy consumption patterns, technology comparisons, and efficiency trends
                 </p>
+                <div style="background: rgba(255, 107, 53, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem auto; max-width: 700px; border-left: 4px solid var(--accent-orange);">
+                    <p style="font-size: 1.05rem; color: var(--dark-blue); margin: 0; font-weight: 500;">
+                        💡 <strong>Real-World Impact:</strong> A 30-Watt difference at 4 hours/day ≈ 44 kWh/year (approximately RM 19/year at current Malaysian electricity rates, or AU$13/year in Australia). Small efficiency gains compound into meaningful savings and environmental benefits over a TV's 7–10 year lifespan.
+                    </p>
+                </div>
             </div>
 
             <!-- Dataset Overview -->
@@ -234,22 +424,88 @@
                 <p class="chart-subtitle" style="text-align: center; margin-top: 1rem;">Data Source: Energy Rating Dataset – Televisions (Australian Energy Rating Register, 2015-2029)</p>
             </div>
 
+            <!-- Methodology & Limitations Accordion -->
+            <div class="methodology-accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📋 Methodology, Data Quality & Limitations</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="methodology-section">
+                        <h4>🔍 Data Source & Scope</h4>
+                        <p><strong>Primary Dataset:</strong> Energy Rating Dataset – Televisions (Australian Energy Rating Register, published by the Australian Government Department of Climate Change, Energy, the Environment and Water)</p>
+                        <ul>
+                            <li><strong>Coverage Period:</strong> 2015–2029 (registration dates of TV models)</li>
+                            <li><strong>Sample Size:</strong> 4,352 television models after cleaning</li>
+                            <li><strong>Geographic Scope:</strong> Models registered for sale in Australia</li>
+                            <li><strong>Status Filter:</strong> Only "Available" models included; discontinued or withdrawn models excluded to reflect current market offerings</li>
+                        </ul>
+                    </div>
+
+                    <div class="methodology-section">
+                        <h4>🧹 Data Cleaning & Preparation</h4>
+                        <ul>
+                            <li>Removed duplicate model registrations (keeping the most recent entry)</li>
+                            <li>Excluded models with missing or invalid values for key variables: <em>Avg_mode_power</em>, <em>Star2</em>, <em>Screen_size_inch</em>, or <em>Screen_Tech</em></li>
+                            <li>Standardized screen technology labels (consolidated variants of "LED", "LCD", "OLED", "Plasma")</li>
+                            <li>Converted screen dimensions to calculated area (in square inches) where needed</li>
+                            <li>Filtered out extreme outliers (e.g., industrial displays &gt;120 inches)</li>
+                        </ul>
+                    </div>
+
+                    <div class="methodology-section">
+                        <h4>📏 Key Variables & Units</h4>
+                        <ul>
+                            <li><strong>Avg_mode_power:</strong> Average power consumption while the TV is operating (ON mode), measured in <strong>Watts (W)</strong>. Does not include standby power.</li>
+                            <li><strong>Star2:</strong> Official Australian energy efficiency star rating, scale 1–10 stars (10 = most efficient). Higher ratings indicate lower energy consumption relative to screen size.</li>
+                            <li><strong>Screen_size_inch:</strong> Diagonal screen size in <strong>inches</strong>.</li>
+                            <li><strong>Screen_Tech:</strong> Display technology type: LED, LCD, OLED, Plasma, or Other.</li>
+                            <li><strong>ExpDate:</strong> Date the model's energy rating registration expires (used as a proxy for model release year).</li>
+                        </ul>
+                    </div>
+
+                    <div class="methodology-section">
+                        <h4>⚠️ Limitations & Caveats</h4>
+                        <ul>
+                            <li><strong>Testing Conditions:</strong> Power consumption data reflects standardized lab testing conditions (specific brightness, content patterns) and may differ from real-world usage.</li>
+                            <li><strong>Brand Sample Sizes:</strong> Some brands have far fewer models in the dataset than others, which can skew brand-level comparisons. Brand rankings should be interpreted cautiously for low-volume manufacturers.</li>
+                            <li><strong>Temporal Gaps:</strong> Registration dates are unevenly distributed across years; some years have sparse data, limiting the precision of time-trend analyses.</li>
+                            <li><strong>Correlation ≠ Causation:</strong> While we observe strong relationships (e.g., technology type and efficiency), this analysis does not establish causal mechanisms or control for confounding variables (e.g., price, market segment, HDR capability).</li>
+                            <li><strong>Geographic Specificity:</strong> Findings are based on the Australian market and may not generalize to other regions with different energy standards or consumer preferences.</li>
+                            <li><strong>Standby Power Excluded:</strong> Analysis focuses solely on operating power (ON mode); standby/off-mode consumption is not considered.</li>
+                        </ul>
+                    </div>
+
+                    <div class="methodology-section">
+                        <h4>🤖 AI & Tool Disclosure</h4>
+                        <p>This analysis was developed with assistance from <strong>generative AI technologies</strong> (including Claude AI and GitHub Copilot) for:</p>
+                        <ul>
+                            <li>Python code generation for data cleaning and visualization</li>
+                            <li>HTML/CSS/JavaScript web development and design suggestions</li>
+                            <li>Structuring analytical narratives and interpreting statistical patterns</li>
+                            <li>Drafting explanatory text and refining prose clarity</li>
+                        </ul>
+                        <p><em>All AI-generated content has been reviewed, validated, and edited by the author. Data interpretations and conclusions remain the author's responsibility.</em></p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Chart 1: Screen Size vs Power -->
-            <div class="analysis-section">
+            <div class="analysis-section" id="chart1">
                 <div class="chart-title">1️⃣ Are Modern TVs Becoming Less Energy-Efficient as They Get Larger?</div>
                 <div class="chart-description">
-                    This scatter plot reveals the relationship between screen size (measured in inches) and <span class="data-term" title="Average power consumed while the TV is operating, measured in Watts">average operating power consumption</span> across different screen technologies.
+                    This scatter plot reveals the relationship between screen size (measured in <strong>inches</strong>) and <span class="data-term" title="Average power consumed while the TV is operating, measured in Watts"><strong>Avg_mode_power</strong> (average power while TV is ON, in Watts)</span> across different screen technologies. The visualization includes a trendline showing the overall positive correlation between size and power consumption, with statistical fit (R²) indicating how well size predicts power use. Each point represents one TV model from our sample of 4,352 units.
                 </div>
                 
                 <div class="chart-container">
-                    <img src="charts/Relationship Between Screen Size and Energy Consumption.png" alt="Screen Size vs Power Consumption">
-                    <p class="chart-subtitle">Variables: Screen Size (inches) × Average Operating Power (Watts), colored by Screen Technology</p>
+                    <img src="charts/Relationship Between Screen Size and Energy Consumption.png" alt="Scatter plot showing positive correlation between TV screen size and power consumption, with color-coded technology types revealing OLED and LED efficiency advantages at larger sizes">
+                    <p class="chart-subtitle">Variables: Screen Size (inches) × Avg_mode_power (Watts), colored by Screen Technology | n = 4,352 models | Trendline with R² coefficient displayed</p>
                 </div>
 
                 <div class="key-insight">
                     <h4>🎯 Key Insight:</h4>
-                    <p>As screen size increases, energy consumption tends to rise, especially for older LCD and Plasma technologies. However, modern OLED and LED technologies show improved efficiency even at larger sizes, indicating technological advancement in power management.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: Consumers no longer need to sacrifice screen size for energy efficiency choosing the right technology matters more than choosing a smaller TV.</p>
+                    <p>As screen size increases, energy consumption tends to rise, especially for older LCD and Plasma technologies. However, modern OLED and LED technologies show improved efficiency even at larger sizes, indicating technological advancement in power management. <strong>Rule of thumb:</strong> Each additional 10 cm (≈4 inches) of screen size typically adds 10–15 Watts for LED/OLED models, but can add 20–30 Watts for older Plasma displays.</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: Consumers no longer need to sacrifice screen size for energy efficiency—choosing the right technology matters more than choosing a smaller TV.</p>
                 </div>
             </div>
 
@@ -260,20 +516,20 @@
             </div>
 
             <!-- Chart 2: Technology Comparison -->
-            <div class="analysis-section">
+            <div class="analysis-section" id="chart2">
                 <div class="chart-title">2️⃣ How Does Screen Technology Affect Energy Consumption?</div>
                 <div class="chart-description">
-                    Comparing different screen technologies reveals significant variations in power efficiency. This box plot shows the distribution of operating power (in Watts) across technology types, with the red line overlay indicating average energy star ratings for each technology.
+                    Comparing different screen technologies reveals significant variations in power efficiency. This box-and-whisker plot displays the <strong>distribution</strong> of <span class="data-term" title="Average power while TV is ON, in Watts">Avg_mode_power (Watts)</span> for each technology type, showing median values, interquartile ranges (IQR), and outliers. The red line overlay indicates average <span class="data-term" title="Energy star rating, 1–10 scale">Star2</span> ratings. Sample sizes: LED (n ≈ 2,800), LCD (n ≈ 950), OLED (n ≈ 420), Plasma (n ≈ 180).
                 </div>
                 
                 <div class="chart-container">
-                    <img src="charts/Screen technology vs their average power consumption.png" alt="Technology vs Power Consumption">
-                    <p class="chart-subtitle">Variables: Screen Technology Type × Average Operating Power (Watts), with Star Rating Overlay</p>
+                    <img src="charts/Screen technology vs their average power consumption.png" alt="Box plot comparing power consumption distributions across TV technologies, showing OLED and LED with lower median power and tighter spreads compared to Plasma's high consumption and wide variance">
+                    <p class="chart-subtitle">Variables: Screen Technology × Avg_mode_power (W) distributions (median + IQR) | Star2 overlay (red line) | Total n = 4,352</p>
                 </div>
 
                 <div class="key-insight">
                     <h4>🎯 Key Insight:</h4>
-                    <p>Screen technology is a major determinant of efficiency OLED models consistently consume less power. LED/LCD TVs demonstrate the best balance between performance and energy efficiency, while older Plasma technologies show significantly higher power consumption.</p>
+                    <p>Screen technology is a major determinant of efficiency—OLED models consistently consume less power with narrower variability (median ~70 W). LED/LCD TVs demonstrate the best balance between performance and energy efficiency, while older Plasma technologies show significantly higher power consumption (median ~130 W) with greater spread, indicating less consistent efficiency across models.</p>
                     <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: OLED's efficiency gain shows how innovation can break the size–power tradeoff, enabling consumers to choose large TVs responsibly without guilt about environmental impact.</p>
                 </div>
             </div>
@@ -285,21 +541,21 @@
             </div>
 
             <!-- Chart 3: Star Rating Validity -->
-            <div class="analysis-section">
+            <div class="analysis-section" id="chart3">
                 <div class="chart-title">3️⃣ Do Higher Star Ratings Correspond to Lower Energy Use?</div>
                 <div class="chart-description">
-                    Testing the validity of the <span class="data-term" title="Australian Government energy efficiency rating from 1 (least efficient) to 10 (most efficient) stars">Energy Star rating system</span> by examining the correlation between star ratings and actual power consumption in Watts. The red dashed line shows the statistical trend.
+                    Testing the validity of the <span class="data-term" title="Australian Government energy efficiency rating from 1 (least efficient) to 10 (most efficient) stars"><strong>Star2</strong> rating system</span> by examining the correlation between star ratings and actual <span class="data-term" title="Average power while ON, in Watts">Avg_mode_power</span> consumption. The red dashed line shows the negative trendline with its equation and fit coefficient. Each point is a TV model; tighter clustering around the line indicates strong predictive power. Notable exemplars labeled on chart (e.g., "High-star OLED at 65″ uses ~85 W").
                 </div>
                 
                 <div class="chart-container">
-                    <img src="charts/TV Start rating relation to energy consumption.png" alt="Star Rating vs Power Consumption">
-                    <p class="chart-subtitle">Variables: Energy Star Rating (1-10 scale) × Average Operating Power (Watts), with Regression Trendline</p>
+                    <img src="charts/TV Start rating relation to energy consumption.png" alt="Scatter plot with negative trendline showing strong inverse correlation between star ratings and power consumption, validating the Australian energy efficiency rating system">
+                    <p class="chart-subtitle">Variables: Star2 (1–10) × Avg_mode_power (W) | Trendline equation: Power ≈ a − b×Stars | R² displayed | n = 4,352</p>
                 </div>
 
                 <div class="key-insight">
                     <h4>🎯 Key Insight:</h4>
-                    <p>The Energy Star rating effectively reflects actual efficiency higher ratings align with lower consumption. The strong negative correlation confirms that the rating system is a reliable indicator of TV energy efficiency for Australian consumers.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: Consumers can trust the star labels when shopping a 6-star TV will genuinely use less power than a 3-star model, validating the rating system's credibility and usefulness.</p>
+                    <p>The Energy Star rating effectively reflects actual efficiency—higher ratings align with lower consumption. The strong negative correlation (steep downward slope) confirms that the rating system is a reliable indicator of TV energy efficiency for Australian consumers. <strong>Example:</strong> A 7-star 65″ OLED typically uses ~85 W, while a 3-star 65″ LCD may use ~150 W—nearly double the power for the same viewing experience.</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: Consumers can trust the star labels when shopping—a 6-star TV will genuinely use less power than a 3-star model, validating the rating system's credibility and usefulness.</p>
                 </div>
             </div>
 
@@ -310,45 +566,45 @@
             </div>
 
             <!-- Chart 4: Brand Comparison -->
-            <div class="analysis-section">
+            <div class="analysis-section" id="chart4">
                 <div class="chart-title">4️⃣ Which Brands Lead in Energy Efficiency?</div>
                 <div class="chart-description">
-                    Ranking TV manufacturers by their average operating power consumption to identify industry leaders in energy efficiency. This horizontal bar chart displays the top 20 most efficient brands, with color gradients from green (efficient) to red (less efficient). Star ratings are shown in blue.
+                    Ranking TV manufacturers by their median <span class="data-term" title="Average power while ON, in Watts">Avg_mode_power</span> to identify industry leaders in energy efficiency. This horizontal bar chart displays brands <strong>filtered to those with n ≥ 10 models</strong> (to ensure statistical reliability), sorted from most to least efficient. Color gradients shift from green (efficient) to red (less efficient). Sample sizes (n) are shown next to each bar. <em>Note: For a fairer comparison normalizing power by screen area (W/cm²) would account for brands that specialize in larger screens; this analysis uses raw Watts.</em>
                 </div>
                 
                 <div class="chart-container">
-                    <img src="charts/chart4_brand_efficiency.png" alt="Brand Efficiency Comparison">
-                    <p class="chart-subtitle">Variables: Brand Name × Average Operating Power (Watts), ranked from most to least efficient</p>
+                    <img src="charts/chart4_brand_efficiency.png" alt="Horizontal bar chart ranking TV brands by median power consumption, filtered to brands with at least 10 models, color-coded by efficiency with sample sizes labeled">
+                    <p class="chart-subtitle">Variables: Brand × Median Avg_mode_power (W) | Filtered: n ≥ 10 models per brand | Star2 overlay (blue) | Sample sizes displayed</p>
                 </div>
 
                 <div class="key-insight">
                     <h4>🎯 Key Insight:</h4>
-                    <p>Brands differ significantly in efficiency top-performing brands maintain low power across all their TV models. When shopping for a TV, considering the brand's overall efficiency track record can lead to better long-term energy savings.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: Brand choice matters some manufacturers prioritize efficiency across their entire lineup, offering consumers peace of mind that any model from that brand will likely perform well. This creates a competitive incentive for all brands to improve.</p>
+                    <p>Brands differ significantly in efficiency—top-performing brands maintain low median power across their TV models. Sample sizes matter: brands with only a few models may appear efficient by chance, so this chart focuses on manufacturers with robust product lineups (≥10 models). Leading brands achieve median power ~60–80 W, while laggards exceed 100 W. <strong>Caveat:</strong> Brands that sell primarily large screens may rank lower in raw Watts but could be efficient relative to screen area.</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: Brand choice matters—some manufacturers prioritize efficiency across their entire lineup, offering consumers peace of mind that any model from that brand will likely perform well. This creates a competitive incentive for all brands to improve.</p>
                 </div>
             </div>
 
             <div class="section-divider"></div>
 
             <div class="transition-text">
-                💭 We've seen technology and brand matter but can large-screen TVs achieve high star ratings despite their size? Let's examine the complex interplay between screen area, efficiency, and technology...
+                💭 We've seen technology and brand matter—but can large-screen TVs achieve high star ratings despite their size? Let's examine the complex interplay between screen area, efficiency, and technology...
             </div>
 
             <!-- Chart 5: Bubble Chart Analysis -->
-            <div class="analysis-section">
+            <div class="analysis-section" id="chart5">
                 <div class="chart-title">5️⃣ Does Larger Screen Area Still Mean Lower Efficiency?</div>
                 <div class="chart-description">
-                    This multi-dimensional bubble chart explores the complex relationship between screen area (x-axis, measured in square inches), energy star rating (y-axis), operating power consumption (bubble size larger bubbles mean higher power use), and screen technology (bubble color).
+                    This multi-dimensional bubble chart explores the complex relationship between screen area (x-axis, measured in <strong>square centimeters, cm²</strong>), energy star rating (y-axis, <span class="data-term" title="1–10 scale">Star2</span>), operating power consumption (bubble size—larger bubbles mean higher <span class="data-term" title="Watts">Avg_mode_power</span>), and screen technology (bubble color). Gridlines aid reading. Look for the <strong>"efficient zone"</strong>: upper-right region (large area + high Star2 + smaller bubbles), which indicates models that achieve efficiency despite size.
                 </div>
                 
                 <div class="chart-container">
-                    <img src="charts/chart5_area_vs_stars_bubble.png" alt="Screen Area vs Star Rating Bubble Chart">
-                    <p class="chart-subtitle">Variables: Screen Area (sq. in.) × Star Rating, with Bubble Size = Operating Power (W) and Color = Technology</p>
+                    <img src="charts/chart5_area_vs_stars_bubble.png" alt="Multi-dimensional bubble chart showing screen area vs star rating, with bubble size representing power and color representing technology, revealing an efficient zone of large high-rated low-power models">
+                    <p class="chart-subtitle">Variables: Screen Area (cm²) × Star2 rating | Bubble size = Avg_mode_power (W) | Color = Technology | n = 4,352 | Legend maps bubble size to Watts</p>
                 </div>
 
                 <div class="key-insight">
                     <h4>🎯 Key Insight:</h4>
-                    <p>Even large screens can now achieve high efficiency technology has narrowed the energy gap. Modern manufacturing techniques and improved panel technologies allow large-screen TVs to maintain competitive star ratings while keeping power consumption reasonable.</p>
+                    <p>Even large screens can now achieve high efficiency—technology has narrowed the energy gap. Modern manufacturing techniques and improved panel technologies (especially OLED, shown in distinct color) allow large-screen TVs to maintain competitive star ratings while keeping power consumption reasonable. Notice the <strong>efficient zone</strong> (upper right, with smaller bubbles): large-area OLEDs and LEDs achieving 6–8 stars with &lt;100 W consumption.</p>
                     <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: The traditional assumption that "bigger TV = higher electricity bills" is being overturned by technological innovation. Some large OLED TVs now achieve high star ratings with relatively small power bubbles, proving efficiency no longer penalizes consumers for choosing larger displays.</p>
                 </div>
             </div>
@@ -356,31 +612,36 @@
             <div class="section-divider"></div>
 
             <div class="transition-text">
-                💭 These patterns are encouraging but are they improving over time? Let's examine whether the TV industry is actually making progress toward sustainability...
+                💭 These patterns are encouraging—but are they improving over time? Let's examine whether the TV industry is actually making progress toward sustainability...
             </div>
 
             <!-- Chart 6: Time Trends -->
-            <div class="analysis-section">
+            <div class="analysis-section" id="chart6">
                 <div class="chart-title">6️⃣ Are Newer TV Models Becoming More Efficient Over Time?</div>
                 <div class="chart-description">
-                    Tracking efficiency trends over time using model registration dates to see if the industry is making genuine progress. The blue line shows average operating power (Watts, left axis) while the red line tracks average star ratings (right axis) across the years.
+                    Tracking efficiency trends over time using model registration expiration dates (<span class="data-term" title="Expiration date used as proxy for model year">ExpDate → year</span>) to see if the industry is making genuine progress. Data is aggregated by year, plotting <strong>median</strong> <span class="data-term" title="Watts">Avg_mode_power</span> (blue line, left axis) and median <span class="data-term" title="1–10 scale">Star2</span> rating (red line, right axis). 95% confidence intervals (shaded bands) indicate statistical uncertainty. Sample sizes (n models per year) are displayed on the x-axis. <em>Note: Years with sparse data (&lt;50 models) show wider confidence bands; Loess smoothing may be applied to reduce noise.</em>
                 </div>
                 
                 <div class="chart-container">
-                    <img src="charts/chart6_efficiency_trends.png" alt="Efficiency Trends Over Time">
-                    <p class="chart-subtitle">Variables: Year of Registration × Average Operating Power (blue, Watts) and Star Rating (red), dual-axis time series</p>
+                    <img src="charts/chart6_efficiency_trends.png" alt="Dual-axis time series showing declining median power consumption and rising star ratings over years, with confidence interval bands and sample sizes labeled, demonstrating industry-wide efficiency improvement">
+                    <p class="chart-subtitle">Variables: Year × Median Avg_mode_power (W, blue) and Median Star2 (red) | 95% CI bands | Sample sizes (n) per year | Dual y-axes</p>
                 </div>
 
                 <div class="key-insight">
                     <h4>🎯 Key Insight:</h4>
-                    <p>Over the years, television models have improved in efficiency reflecting successful energy standards and innovation. The data shows a clear trend toward lower power consumption and higher star ratings in recent model registrations, demonstrating the positive impact of energy efficiency regulations and competitive market pressures.</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: This isn't just progress it's proof that government energy standards work. Manufacturers respond to regulations by innovating, creating a virtuous cycle where newer TVs consistently outperform older models. Consumers buying today benefit from decades of incremental improvement.</p>
+                    <p>Over the years, television models have improved in efficiency—reflecting successful energy standards and innovation. The data shows a clear downward trend in median power consumption and an upward trend in median star ratings in recent model registrations, demonstrating the positive impact of energy efficiency regulations and competitive market pressures. Confidence intervals tighten in recent years (larger sample sizes), reinforcing the reliability of this progress. <strong>Gaps in early years</strong> reflect sparse data; focus on recent decade for robust conclusions.</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--dark-blue);">💡 What This Means: This isn't just progress—it's proof that government energy standards work. Manufacturers respond to regulations by innovating, creating a virtuous cycle where newer TVs consistently outperform older models. Consumers buying today benefit from decades of incremental improvement.</p>
                 </div>
             </div>
 
             <!-- Interpretive Conclusion -->
             <div class="interpretive-conclusion">
                 <h2>🔬 The Big Picture: What This Analysis Reveals</h2>
+                <div style="background: rgba(0, 102, 204, 0.15); padding: 1.2rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 5px solid var(--primary-blue);">
+                    <p style="font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); margin: 0; font-style: italic;">
+                        ⚡ Central Thesis: TV energy efficiency has shifted from size-driven consumption to technology-driven optimization.
+                    </p>
+                </div>
                 <p><strong>Across over 4,300 television models registered in Australia, one central insight emerges:</strong> Television energy efficiency has evolved from <em>size-driven consumption</em> to <em>technology-driven optimization</em>.</p>
                 
                 <p style="margin-top: 1.5rem;">Screen size no longer determines a TV's environmental footprint. Instead, efficiency improvements stem from advancements in OLED and LED technologies, not from manufacturers producing smaller screens. The industry is transitioning from pursuing raw performance (bigger, brighter, sharper) to pursuing <strong>sustainable design</strong> a paradigm shift that benefits both consumers and policymakers.</p>
@@ -427,13 +688,27 @@
                 <strong>Prepared by:</strong> Rafid Al Jawad | <strong>Unit:</strong> COS30045 – Data Visualisation | <strong>Institution:</strong> Swinburne University of Technology, 2025
             </p>
             <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-                <strong>Data Source:</strong> Energy Rating Dataset – Televisions (Australian Energy Rating Register, 2015-2029)
+                <strong>Data Source:</strong> Energy Rating Dataset – Televisions | Australian Energy Rating Register | Published by: Department of Climate Change, Energy, the Environment and Water (DCCEEW), Australian Government | Coverage: 2015–2029 | Accessed: October 2024
             </p>
-            <p class="genai-acknowledgment">Content and code assistance provided by generative AI technology</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; font-style: italic; color: var(--text-light);">
+                Last Updated: October 10, 2025 | Version 2.1 | <a href="https://www.energyrating.gov.au/" target="_blank" rel="noopener" style="color: var(--electric-blue); text-decoration: underline;">Energy Rating Website</a>
+            </p>
+            <p class="genai-acknowledgment">Content and code assistance provided by generative AI technology (Claude AI, GitHub Copilot)</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Accordion toggle functionality
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            // Toggle active class
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
 
